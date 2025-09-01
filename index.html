@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Biovitaly — Soluciones sanitarias y tecnología</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Biovitaly - 7 años en el sector. Almacén en Sevilla. Productos de incontinencia, desechables y kits. Catálogo informativo con fichas técnicas."
+    />
+    <meta name="robots" content="index,follow" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* (El CSS es el mismo que ya teníamos, con algunas mejoras en botones) */
+      :root {
+        --bg1: #041626;
+        --bg2: #05303a;
+        --accent: #00bcd4;
+        --accent2: #0ebf9b;
+        --accent3: #0a9ad1;
+        --muted: #cfeff1;
+        --surface: #ffffff;
+        --glass: rgba(255, 255, 255, 0.03);
+        --card-shadow: 0 18px 50px rgba(2, 10, 20, 0.5);
+        --radius: 14px;
+        --maxw: 1200px;
+        --fav-color: #ff3b3b;
+        --fav-muted: rgba(255, 59, 59, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        color: var(--muted);
+        background: linear-gradient(180deg, var(--bg1), var(--bg2));
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.6;
+      }
+      .header {
+        position: fixed;
+        inset: 0 0 auto 0;
+        height: 84px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 28px;
+        z-index: 1600;
+        background: linear-gradient(
+          180deg,
+          rgba(2, 6, 10, 0.45),
+          rgba(2, 6, 10, 0.12)
+        );
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        transition: all 0.32s ease;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .mark {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        color: #04292a;
+        font-size: 20px;
+      }
+      .nav {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+      .nav a {
+        color: var(--muted);
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-weight: 700;
+      }
+      .nav a:hover {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+      }
+      .search input {
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: none;
+        background: var(--glass);
+        color: var(--surface);
+        min-width: 220px;
+      }
+      .search button {
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(90deg, var(--accent3), var(--accent));
+        color: #04292a;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .autocomplete {
+        position: absolute;
+        top: 46px;
+        left: 0;
+        right: auto;
+        z-index: 2000;
+        background: var(--surface);
+        color: #043a36;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(2, 6, 20, 0.6);
+        overflow: hidden;
+        width: 320px;
+        max-height: 240px;
+        overflow-y: auto;
+        display: none;
+      }
+      .autocomplete.visible {
+        display: block;
+      }
+      .autocomplete .item {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        cursor: pointer;
+      }
+      .autocomplete .item:last-child {
+        border-bottom: none;
+      }
+      .autocomplete .item:hover {
+        background: var(--fav-muted);
+      }
+      .splash {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1200;
+        pointer-events: none;
+      }
+      .splash h1 {
+        font-size: clamp(72px, 12vw, 180px);
+        line-height: 0.88;
+        font-weight: 900;
+        color: transparent;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-align: center;
+        text-shadow: 0 40px 80px rgba(2, 10, 20, 0.6);
+        transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.2, 1),
+          opacity 0.5s ease;
+      }
+      .splash.hide h1 {
+        transform: translateY(-40px) scale(0.82);
+        opacity: 0;
+      }
+      main {
+        padding-top: 110px;
+      }
+      .hero {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        padding: 44px 20px;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background-image: url("https://images.unsplash.com/photo-1588776814546-0bfa59d4d8a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2200&q=80");
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.55) saturate(1.1);
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 40;
+        max-width: var(--maxw);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 520px;
+        gap: 28px;
+        align-items: center;
+      }
+      .hero-title {
+        font-size: 34px;
+        font-weight: 900;
+        color: var(--surface);
+        margin-bottom: 10px;
+      }
+      .hero-sub {
+        color: var(--muted);
+        font-size: 18px;
+        margin-bottom: 18px;
+      }
+      .cta-row {
+        display: flex;
+        gap: 12px;
+      }
+      .carousel-wrap {
+        perspective: 1600px;
+      }
+      .carousel {
+        width: 520px;
+        height: 340px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 1s cubic-bezier(0.2, 0.9, 0.2, 1);
+      }
+      .carousel .slide {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        backface-visibility: hidden;
+        box-shadow: 0 18px 50px rgba(2, 10, 20, 0.4);
+        border: 6px solid rgba(255, 255, 255, 0.02);
+      }
+      .carousel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .carousel .caption {
+        position: absolute;
+        left: 16px;
+        bottom: 16px;
+        padding: 8px 12px;
+        border-radius: 10px;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.45),
+          rgba(0, 0, 0, 0.15)
+        );
+        color: white;
+        font-weight: 800;
+      }
+      .section {
+        padding: 64px 20px;
+      }
+      .container {
+        max-width: var(--maxw);
+        margin: 0 auto;
+      }
+      .heading {
+        font-size: 32px;
+        color: var(--accent);
+        font-weight: 900;
+        margin-bottom: 8px;
+      }
+      .lead {
+        font-size: 18px;
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+      .products-shell {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 28px;
+        align-items: start;
+      }
+      .catalog {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        padding: 18px;
+        border-radius: 12px;
+      }
+      .filter-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+      .filter-row select,
+      .filter-row button,
+      .filter-row input {
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        background: var(--glass);
+        color: var(--surface);
+      }
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 16px;
+      }
+      .product-card {
+        background: var(--surface);
+        color: #093e3a;
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 0 18px 50px rgba(2, 10, 20, 0.4);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        transition: transform 0.25s;
+      }
+      .product-card:hover {
+        transform: translateY(-8px);
+      }
+      .product-card .img {
+        height: 200px;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .product-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .product-title {
+        font-size: 18px;
+        font-weight: 900;
+      }
+      .product-sub {
+        font-size: 14px;
+        color: #2f6f66;
+      }
+      .product-short {
+        font-size: 15px;
+        color: #2f6f66;
+      }
+      .controls {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .btn {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: none;
+        background: linear-gradient(90deg, var(--accent3), var(--accent));
+        color: #04282a;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .btn-ghost {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .btn-primary {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: none;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        color: #04282a;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      /* improved compare & share */
+      .btn-compare {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: none;
+        background: linear-gradient(90deg, #ffd36b, #ffb24b);
+        color: #2b1900;
+        font-weight: 800;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-share {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+        color: var(--muted);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-heart {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
+        color: #066;
+        cursor: pointer;
+        font-weight: 800;
+      }
+      .btn-heart .heart {
+        font-size: 18px;
+        color: rgba(0, 0, 0, 0.2);
+        transition: all 0.18s ease;
+      }
+      .btn-heart.favorited {
+        background: var(--fav-muted);
+        border-radius: 8px;
+      }
+      .btn-heart.favorited .heart {
+        color: var(--fav-color);
+        text-shadow: 0 2px 8px rgba(255, 59, 59, 0.14);
+      }
+      .sidebar {
+        position: sticky;
+        top: 96px;
+        padding: 16px;
+        border-radius: 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      }
+      .sidebar h3 {
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(2, 6, 20, 0.75);
+        z-index: 2200;
+      }
+      .panel {
+        background: #fff;
+        width: min(1120px, 96%);
+        border-radius: 12px;
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 16px;
+        padding: 18px;
+        position: relative;
+        color: #043a36;
+        max-height: 86vh;
+        overflow: auto;
+      }
+      .close {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .acc-item {
+        border-top: 1px solid rgba(2, 6, 23, 0.04);
+        padding: 10px 0;
+      }
+      .acc-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 800;
+      }
+      .acc-body {
+        display: none;
+        margin-top: 8px;
+        color: #2c6b62;
+      }
+      .compare-modal .panel {
+        width: min(1100px, 96%);
+        display: flex;
+        flex-direction: column;
+      }
+      .compare-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .compare-card {
+        background: #f6fbfb;
+        border-radius: 10px;
+        padding: 12px;
+        color: #043a36;
+        box-shadow: 0 10px 30px rgba(2, 10, 20, 0.15);
+      }
+      .compare-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        margin-top: 12px;
+      }
+      footer {
+        padding: 40px 20px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 20px;
+      }
+      @media (max-width: 980px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+        .products-shell {
+          grid-template-columns: 1fr;
+        }
+        .panel {
+          grid-template-columns: 1fr;
+        }
+        .search input {
+          width: 160px;
+        }
+        .autocomplete {
+          width: 260px;
+        }
+      }
+      h1,
+      h2,
+      h3 {
+        letter-spacing: 0.3px;
+      }
+      h1 {
+        font-size: 30px;
+      }
+      p {
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header" role="banner" aria-label="Cabecera">
+      <div class="brand" id="brand">
+        <div class="mark" aria-hidden="true">B</div>
+        <div>
+          <h1>Biovitaly</h1>
+          <small>7 años • Almacén en Sevilla</small>
+        </div>
+      </div>
+
+      <nav class="nav" role="navigation" aria-label="Menú principal">
+        <a href="#home" data-scroll>Home</a>
+        <a href="#products" data-scroll>Productos</a>
+        <a href="#about" data-scroll>Sobre nosotros</a>
+        <a href="#faq" data-scroll>Preguntas frecuentes</a>
+        <a href="#contact" data-scroll>Contacto</a>
+      </nav>
+
+      <div class="search" role="search" aria-label="Buscar">
+        <input
+          id="globalSearch"
+          placeholder="Buscar (ej: empapador, toallitas, pañal...)"
+          aria-label="Buscar productos"
+        />
+        <button id="globalSearchBtn" title="Buscar">🔍</button>
+        <div
+          id="globalAutocomplete"
+          class="autocomplete"
+          role="listbox"
+          aria-hidden="true"
+        ></div>
+      </div>
+    </header>
+
+    <!-- SPLASH (solo nombre gigante) -->
+    <div class="splash" id="splash"><h1>Biovitaly</h1></div>
+
+    <main>
+      <!-- HERO -->
+      <section id="home" class="hero" aria-labelledby="heroTitle">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-inner">
+          <div>
+            <div class="hero-title" id="heroTitle">
+              Sanidad + Tecnología — Soluciones que cuidan
+            </div>
+            <div class="hero-sub">
+              Somos Biovitaly: 7 años suministrando soluciones sanitarias de
+              confianza desde nuestro almacén en Sevilla.
+            </div>
+            <div class="cta-row">
+              <button class="btn btn-primary" id="btnProducts">
+                Ver productos
+              </button>
+              <button class="btn btn-ghost" id="btnContact">Contactar</button>
+            </div>
+            <div
+              style="
+                margin-top: 20px;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+              "
+            >
+              <div
+                style="
+                  background: rgba(255, 255, 255, 0.02);
+                  padding: 12px;
+                  border-radius: 10px;
+                "
+              >
+                <h3 style="margin: 0 0 8px 0; color: var(--accent)">Calidad</h3>
+                <p style="margin: 0; color: var(--muted)">
+                  Materiales testados, trazabilidad por lote y fichas técnicas
+                  bajo demanda.
+                </p>
+              </div>
+              <div
+                style="
+                  background: rgba(255, 255, 255, 0.02);
+                  padding: 12px;
+                  border-radius: 10px;
+                "
+              >
+                <h3 style="margin: 0 0 8px 0; color: var(--accent2)">
+                  Soporte
+                </h3>
+                <p style="margin: 0; color: var(--muted)">
+                  Asesoría sobre talla y absorción para cada situación clínica.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carousel 3D -->
+          <div>
+            <div class="carousel-wrap" aria-hidden="false">
+              <div
+                id="carousel"
+                class="carousel"
+                role="region"
+                aria-label="Carrusel de productos"
+              ></div>
+            </div>
+            <div
+              style="
+                margin-top: 10px;
+                display: flex;
+                gap: 8px;
+                justify-content: flex-end;
+              "
+            >
+              <button class="btn" id="prev">◀</button>
+              <button class="btn" id="next">▶</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRODUCTS -->
+      <section id="products" class="section" aria-labelledby="productsTitle">
+        <div class="container">
+          <div class="heading" id="productsTitle">Productos</div>
+          <div class="lead">
+            Tres apartados: <strong>Desechables</strong>,
+            <strong>Incontinencia</strong> y <strong>Kits</strong>. Cada
+            producto tiene ficha con desplegables y opciones (tallas,
+            día/noche).
+          </div>
+
+          <div class="products-shell">
+            <div class="catalog" aria-live="polite">
+              <!-- Filters -->
+              <div class="filter-row" role="toolbar" aria-label="Filtros">
+                <label style="font-weight: 900; color: var(--accent)"
+                  >Categoría</label
+                >
+                <select id="filterCategory" aria-label="Filtrar por categoría">
+                  <label style="font-weight: 900; color: black">
+
+                  <option value="all">Todas</option>
+                  <option value="desechable">Desechables</option>
+                  <option value="incontinencia">Incontinencia</option>
+                  <option value="kits">Kits</option>
+                </select>
+
+                <label
+                  id="labelAbs"
+                  style="font-weight: 900; color: var(--accent)"
+                  >Absorción</label
+                >
+                <select
+                  id="filterAbs"
+                  aria-label="Filtrar por absorción"
+                  style="color:black"
+
+                ></select>
+
+                <label
+                  id="labelSize"
+                  style="font-weight: 900; color: var(--accent)"
+                  >Talla</label
+                >
+                <select id="filterSize" aria-label="Filtrar por talla">
+                  <label style="font-weight: 900; color: black">
+
+                  <option value="any">Indiferente</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                </select>
+
+                <button id="resetFilters" class="btn-ghost">Restablecer</button>
+              </div>
+
+              <!-- Text search -->
+              <div
+                style="
+                  display: flex;
+                  gap: 8px;
+                  margin-bottom: 12px;
+                  position: relative;
+                "
+              >
+                <input
+                  id="textSearch"
+                  placeholder="Buscar dentro de productos (ej: empapador, pañal...)"
+                  style="
+                    flex: 1;
+                    padding: 12px;
+                    border-radius: 10px;
+                    border: none;
+                    background: var(--glass);
+                    color: var(--surface);
+                  "
+                />
+                <button id="textSearchBtn" class="btn btn-primary">
+                  Buscar
+                </button>
+                <div
+                  id="productsAutocomplete"
+                  class="autocomplete"
+                  role="listbox"
+                  aria-hidden="true"
+                  style="left: 0; right: auto"
+                ></div>
+              </div>
+
+              <!-- Product grid -->
+              <div
+                class="product-grid"
+                id="productGrid"
+                role="list"
+                aria-label="Listado de productos"
+              ></div>
+            </div>
+
+            <!-- Sidebar (FUTURO eliminado por petición) -->
+            <aside
+              class="sidebar"
+              role="complementary"
+              aria-label="Panel lateral"
+            >
+              <h3>Acciones rápidas</h3>
+              <div style="margin-bottom: 12px">
+                <button class="btn btn-primary" onclick="openContactAndFocus()">
+                  Solicitar asesoría
+                </button>
+              </div>
+
+              <h3 style="margin-top: 12px">Galería</h3>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(2, 1fr);
+                  gap: 8px;
+                  margin-top: 8px;
+                "
+              >
+                <img
+                  src="https://i.postimg.cc/8zny2C5n/Hfc365adea20040f88623b9278116f56cr.jpg"
+                  alt="gal1"
+                  style="
+                    width: 100%;
+                    height: 80px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    cursor: pointer;
+                  "
+                  onclick="openImage(this.src)"
+                />
+                <img
+                  src="https://i.postimg.cc/rws8qkRb/2149609889.jpg"
+                  alt="gal2"
+                  style="
+                    width: 100%;
+                    height: 80px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    cursor: pointer;
+                  "
+                  onclick="openImage(this.src)"
+                />
+                <img
+                  src="https://i.postimg.cc/Kjx8hpT8/doctor-sosteniendo-una-mascara-medica.jpg"
+                  alt="gal3"
+                  style="
+                    width: 100%;
+                    height: 80px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    cursor: pointer;
+                  "
+                  onclick="openImage(this.src)"
+                />
+                <img
+                  src="https://i.postimg.cc/FsmvZF2t/Chat-GPT-Image-1-sept-2025-19-40-39.png"
+                  alt="gal4"
+                  style="
+                    width: 100%;
+                    height: 80px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    cursor: pointer;
+                  "
+                  onclick="openImage(this.src)"
+                />
+              </div>
+
+              <div style="margin-top: 16px">
+                <h3>Comparador</h3>
+                <div id="compareBox" style="min-height: 80px"></div>
+                <div style="display: flex; gap: 8px; margin-top: 8px">
+                  <button class="btn btn-primary" onclick="showComparison()">
+                    Ver comparación
+                  </button>
+                  <button class="btn-ghost" onclick="clearComparison()">
+                    Limpiar
+                  </button>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT / FAQ / CONTACT (sin cambios significativos) -->
+      <section id="about" class="section" aria-labelledby="aboutTitle">
+        <div class="container">
+          <div class="heading" id="aboutTitle">Sobre Biovitaly</div>
+          <div class="lead">
+            Nuestra misión: combinar experiencia sanitaria y tecnología para
+            ofrecer soluciones con trazabilidad, fiabilidad y soporte técnico
+            cercano.
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 18px;
+              margin-top: 18px;
+            "
+          >
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.02);
+                padding: 18px;
+                border-radius: 12px;
+              "
+            >
+              <h2 style="color: var(--accent)">Quiénes somos</h2>
+              <p
+                style="
+                  color: var(--muted);
+                  margin-top: 10px;
+                  font-size: 16px;
+                  line-height: 1.7;
+                "
+              >
+                Biovitaly lleva 7 años suministrando productos sanitarios a
+                residencias, hospitales y clientes particulares. Desde nuestro
+                almacén en Sevilla gestionamos stock, trazabilidad de lotes y
+                documentación técnica para clientes profesionales.
+              </p>
+            </div>
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.02);
+                padding: 18px;
+                border-radius: 12px;
+              "
+            >
+              <h2 style="color: var(--accent2)">Nuestro objetivo</h2>
+              <p
+                style="
+                  color: var(--muted);
+                  margin-top: 10px;
+                  font-size: 16px;
+                  line-height: 1.7;
+                "
+              >
+                Proteger la dignidad del paciente mediante productos fiables y
+                asesoría especializada: ayudamos a elegir talla, absorción y
+                configuración (día/noche). Ofrecemos kits completos y balizas
+                homologadas para situaciones críticas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="section">
+        <div class="container">
+          <div class="heading">Preguntas frecuentes</div>
+          <div style="margin-top: 12px; display: grid; gap: 10px">
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.02);
+                padding: 12px;
+                border-radius: 10px;
+              "
+            >
+              <strong>¿Qué diferencia Día/Noche?</strong>
+              <p style="color: var(--muted)">
+                La versión noche incluye más SAP y barreras anti-fuga para mayor
+                retención durante el sueño.
+              </p>
+            </div>
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.02);
+                padding: 12px;
+                border-radius: 10px;
+              "
+            >
+              <strong>¿Cómo pedimos muestras?</strong>
+              <p style="color: var(--muted)">
+                Solicita ficha técnica o muestra desde la ficha del producto y
+                te contactaremos desde nuestro almacén en Sevilla
+                (angel.guijarro@biovitaly.es).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container">
+          <div class="heading">Contacto</div>
+          <div class="lead">
+            Rellena el formulario y te enviaremos fichas técnicas y plazos desde
+            nuestro almacén en Sevilla.
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 18px;
+              margin-top: 12px;
+            "
+          >
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.02);
+                padding: 18px;
+                border-radius: 12px;
+              "
+            >
+              <form id="contactForm" onsubmit="submitContact(event)">
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 12px;
+                  "
+                >
+                  <input
+                    name="name"
+                    placeholder="Nombre"
+                    required
+                    style="
+                      padding: 12px;
+                      border-radius: 8px;
+                      border: none;
+                      background: var(--glass);
+                      color: var(--surface);
+                    "
+                  />
+                  <input
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    required
+                    style="
+                      padding: 12px;
+                      border-radius: 8px;
+                      border: none;
+                      background: var(--glass);
+                      color: var(--surface);
+                    "
+                  />
+                </div>
+                <input
+                  name="company"
+                  placeholder="Empresa (opcional)"
+                  style="
+                    padding: 12px;
+                    border-radius: 8px;
+                    border: none;
+                    background: var(--glass);
+                    color: var(--surface);
+                    margin-top: 12px;
+                  "
+                />
+                <textarea
+                  name="message"
+                  rows="6"
+                  placeholder="Tu consulta detallada"
+                  required
+                  style="
+                    padding: 12px;
+                    border-radius: 8px;
+                    border: none;
+                    background: var(--glass);
+                    color: var(--surface);
+                    margin-top: 12px;
+                  "
+                ></textarea>
+                <div
+                  style="
+                    display: flex;
+                    gap: 8px;
+                    justify-content: flex-end;
+                    margin-top: 12px;
+                  "
+                >
+                  <button class="btn btn-primary" type="submit">
+                    Enviar consulta
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-ghost"
+                    onclick="document.getElementById('contactForm').reset()"
+                  >
+                    Limpiar
+                  </button>
+                </div>
+              </form>
+              <p style="margin-top: 10px; color: var(--muted); font-size: 13px">
+                Correo de contacto: <strong>angel.guijarro@biovitaly.es</strong>
+              </p>
+            </div>
+
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.02);
+                padding: 18px;
+                border-radius: 12px;
+              "
+            >
+              <h3 style="color: var(--accent)">Dudas rápidas</h3>
+              <input
+                id="quickName"
+                placeholder="Nombre"
+                style="
+                  padding: 10px;
+                  border-radius: 8px;
+                  border: none;
+                  background: var(--glass);
+                  color: var(--surface);
+                  margin-top: 8px;
+                "
+              />
+              <input
+                id="quickEmail"
+                placeholder="Email"
+                style="
+                  padding: 10px;
+                  border-radius: 8px;
+                  border: none;
+                  background: var(--glass);
+                  color: var(--surface);
+                  margin-top: 8px;
+                "
+              />
+              <textarea
+                id="quickMsg"
+                rows="4"
+                placeholder="Tu duda breve"
+                style="
+                  padding: 10px;
+                  border-radius: 8px;
+                  border: none;
+                  background: var(--glass);
+                  color: var(--surface);
+                  margin-top: 8px;
+                "
+              ></textarea>
+              <div
+                style="
+                  display: flex;
+                  gap: 8px;
+                  justify-content: flex-end;
+                  margin-top: 8px;
+                "
+              >
+                <button class="btn btn-primary" onclick="sendQuickDuda()">
+                  Enviar duda
+                </button>
+                <button class="btn-ghost" onclick="clearQuickDuda()">
+                  Limpiar
+                </button>
+              </div>
+              <div style="margin-top: 18px">
+                <h4 style="color: var(--accent2)">Contacto directo</h4>
+                <p style="color: var(--muted)">
+                  Email: <strong>angel.guijarro@biovitaly.es</strong><br />Tel: +34 600
+                  000 000<br />Dirección: Almacén Sevilla (Polígono Industrial)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div
+          class="container"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="font-weight: 900">Biovitaly</div>
+          <div style="color: rgba(255, 255, 255, 0.6)">
+            &copy; <span id="year"></span> Biovitaly — Almacén en Sevilla
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- IMAGE LIGHTBOX -->
+    <div id="imgModal" class="modal" aria-hidden="true">
+      <div
+        class="panel"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12px;
+        "
+      >
+        <button class="close" onclick="closeImage()" aria-label="Cerrar imagen">
+          ✕
+        </button>
+        <img
+          id="imgModalImg"
+          src=""
+          alt="Imagen ampliada"
+          style="max-width: 100%; max-height: 80vh; border-radius: 8px"
+        />
+      </div>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div id="productModal" class="modal" aria-hidden="true">
+      <div class="panel" role="document">
+        <button class="close" onclick="closeProductModal()" aria-label="Cerrar">
+          ✕
+        </button>
+        <div id="modalMain" style="padding-right: 8px; min-height: 320px"></div>
+        <aside>
+          <div
+            id="modalSpecs"
+            style="
+              background: #f6fbfb;
+              padding: 12px;
+              border-radius: 8px;
+              color: #043a36;
+            "
+          ></div>
+          <div
+            id="modalAccordions"
+            style="
+              background: #f6fbfb;
+              padding: 12px;
+              border-radius: 8px;
+              margin-top: 12px;
+              color: #043a36;
+              max-height: 360px;
+              overflow: auto;
+            "
+          ></div>
+          <div
+            style="
+              display: flex;
+              gap: 8px;
+              justify-content: flex-end;
+              margin-top: 12px;
+            "
+          >
+            <button class="btn btn-primary" onclick="goToContactFromModal()">
+              Solicitar info
+            </button>
+            <button class="btn-ghost" onclick="closeProductModal()">
+              Cerrar
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- COMPARE MODAL -->
+    <div id="compareModal" class="modal compare-modal" aria-hidden="true">
+      <div
+        class="panel"
+        role="dialog"
+        aria-modal="true"
+        style="padding: 18px; max-width: 1100px"
+      >
+        <button class="close" onclick="closeCompareModal()" aria-label="Cerrar">
+          ✕
+        </button>
+        <h2 style="margin: 0 0 8px 0">Comparativa</h2>
+        <div id="compareContent"></div>
+        <div class="compare-actions" style="margin-top: 12px">
+          <button class="btn btn-primary" onclick="exportComparison()">
+            Copiar comparativa
+          </button>
+          <button class="btn btn-ghost" onclick="clearComparison()">
+            Limpiar
+          </button>
+          <button class="btn btn-ghost" onclick="closeCompareModal()">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ===================== UTILITIES & DATA (actualizado) ===================== */
+
+      function normalizeText(s) {
+        if (!s) return "";
+        let t = String(s).toLowerCase();
+        t = t
+          .replace(/[áàäâ]/g, "a")
+          .replace(/[éèëê]/g, "e")
+          .replace(/[íìïî]/g, "i")
+          .replace(/[óòöô]/g, "o")
+          .replace(/[úùüû]/g, "u")
+          .replace(/ñ/g, "n");
+        t = t.replace(/[^a-z0-9\s]/g, " ");
+        t = t.replace(/\s+/g, " ").trim();
+        const words = t.split(" ").map((w) => {
+          if (w.length <= 3) return w;
+          if (w.endsWith("es")) return w.slice(0, -2);
+          if (w.endsWith("s")) return w.slice(0, -1);
+          return w;
+        });
+        return words.join(" ");
+      }
+
+      const PRODUCTS = [
+        /* Desechables */
+        {
+          id: "d_guantes",
+          category: "desechable",
+          title: "Guantes desechables (nitrilo)",
+          subtitle: "Paquetes 20 uds",
+          img: "https://i.postimg.cc/rws8qkRb/2149609889.jpg",
+          short:
+            "Guantes de nitrilo, sin látex, resistentes. Caja de 20 unidades.",
+          details: {
+            composition: "Nitrilo",
+            packaging: "20 uds",
+            use: "Manipulación y curas",
+            sizes: [],
+            absorption: null,
+          },
+        },
+        {
+          id: "d_mascarilla_quirurgica",
+          category: "desechable",
+          title: "Mascarilla quirúrgica 3 capas",
+          subtitle: "Paquetes 20 uds",
+          img: "https://i.postimg.cc/Kjx8hpT8/doctor-sosteniendo-una-mascara-medica.jpg",
+          short:
+            "Mascarilla quirúrgica 3 capas, puente nasal moldeable, uso sanitario.",
+          details: {
+            type: "quirurgica",
+            packaging: "20 uds",
+            use: "Protección básica frente a gotas",
+            sizes: [],
+            absorption: null,
+          },
+        },
+        {
+          id: "d_mascarilla_ffp2",
+          category: "desechable",
+          title: "Mascarilla FFP2",
+          subtitle: "Caja 10 uds",
+          img: "https://i.postimg.cc/FsmvZF2t/Chat-GPT-Image-1-sept-2025-19-40-39.png",
+          short:
+            "Mascarilla FFP2 con certificación, ajuste facial sellado y filtración superior.",
+          details: {
+            type: "ffp2",
+            packaging: "10 uds",
+            use: "Protección respiratoria de alta eficiencia",
+            sizes: [],
+            absorption: null,
+          },
+        },
+        {
+          id: "d_toallitas",
+          category: "desechable",
+          title: "Toallitas desinfectantes",
+          subtitle: "Formatos 40 y 80 uds",
+          img: "https://i.postimg.cc/d1rjvZGn/Chat-GPT-Image-1-sept-2025-20-03-57.png",
+          short:
+            "Toallitas para manos y superficies. Disponibles en 40 y 80 unidades por paquete.",
+          details: {
+            composition: "Alcohol 70% / opción sin alcohol",
+            packaging: "40 / 80 uds",
+            use: "Higiene manos y superficies",
+            sizes: [],
+            absorption: null,
+          },
+        },
+
+        /* Incontinencia (empapadores, pañales, compresas) */
+        {
+          id: "i_emp_60x75",
+          category: "incontinencia",
+          title: "Empapador 60×75 cm — Alta absorción",
+          subtitle: "Pack 30 uds",
+          img: "https://i.postimg.cc/15wf9x7m/protectores-de-cama.jpg",
+          short:
+            "Empapador 60x75 cm con núcleo SAP de alta capacidad. Ideal para protección de superficies y camas.",
+          details: {
+            absorption: "alto",
+            packaging: "30 uds",
+            use: "Protección en cama y sillón",
+            sizes: [],
+            notes: "Núcleo reforzado y respaldo impermeable",
+          },
+        },
+        {
+          id: "i_emp_60x90",
+          category: "incontinencia",
+          title: "Empapador 60×90 cm — Alta absorción",
+          subtitle: "Pack 30 uds",
+          img: "https://i.postimg.cc/15wf9x7m/protectores-de-cama.jpg",
+          short:
+            "Empapador 60x90 cm de alta absorción para mayor cobertura nocturna.",
+          details: {
+            absorption: "alto",
+            packaging: "30 uds",
+            use: "Protección nocturna",
+            sizes: [],
+            notes: "Canales anti-fuga y respaldo reforzado",
+          },
+        },
+        {
+          id: "i_pullup",
+          category: "incontinencia",
+          title: "Pañal tipo pull-up (sin tiras)",
+          subtitle: "Tallas S / M / L / XL — Día / Noche",
+          img: "https://i.postimg.cc/j5dmDVrn/14584.jpg",
+          short:
+            "Diseño tipo ropa interior para colocación autónoma. Versión Día (absorción media) y Noche (absorción alta).",
+          details: {
+            sizes: ["S", "M", "L", "XL"],
+            variants: {
+              dia: {
+                absorption: "medio",
+                description: "Absorción estándar para uso diurno.",
+              },
+              noche: {
+                absorption: "alto",
+                description:
+                  "Núcleo reforzado para retención durante la noche.",
+              },
+            },
+            packaging: "Paquetes por volumen",
+            use: "Usuarios con movilidad parcial",
+          },
+        },
+        {
+          id: "i_tira",
+          category: "incontinencia",
+          title: "Pañal con tira ajustable",
+          subtitle: "Tallas S / M / L / XL — Día / Noche",
+          img: "https://i.postimg.cc/hPqqbtTV/panales-para-adultos-regular.jpg",
+          short:
+            "Pañal con tiras adhesivas para cambios asistidos. Disponible en día (absorción media) y noche (absorción alta).",
+          details: {
+            sizes: ["S", "M", "L", "XL"],
+            variants: {
+              dia: {
+                absorption: "medio",
+                description: "Diseño para cambios asistidos.",
+              },
+              noche: {
+                absorption: "alto",
+                description: "Versión nocturna con mayor núcleo SAP.",
+              },
+            },
+            packaging: "Paquetes profesionales",
+            use: "Pacientes con movilidad reducida",
+          },
+        },
+        {
+          id: "i_comp_ligero",
+          category: "incontinencia",
+          title: "Compresa femenina — Pérdida ligera",
+          subtitle: "Nivel ligero",
+          img: "https://i.postimg.cc/Kvc7NyNq/Copilot-20250901-212343.png",
+          short:
+            "Compresa anatómica para pérdidas ligeras. Paquetes 20 / 40 uds.",
+          details: {
+            absorption: "bajo",
+            packaging: "20 / 40 uds",
+            use: "Pérdida ligera",
+            notes: "Alas y capa superior suave",
+          },
+        },
+        {
+          id: "i_comp_moderado",
+          category: "incontinencia",
+          title: "Compresa femenina — Pérdida moderada",
+          subtitle: "Nivel moderado",
+          img: "https://i.postimg.cc/Kvc7NyNq/Copilot-20250901-212343.png",
+          short:
+            "Compresa con mayor capacidad absorbente para pérdidas moderadas.",
+          details: {
+            absorption: "medio",
+            packaging: "20 / 40 uds",
+            use: "Pérdida moderada",
+            notes: "Núcleo reforzado",
+          },
+        },
+
+        /* Kits */
+        {
+          id: "a_botiquin",
+          category: "kits",
+          title: "Botiquín de primeros auxilios — Estándar",
+          subtitle: "Maletín completo",
+          img: "https://i.postimg.cc/8zny2C5n/Hfc365adea20040f88623b9278116f56cr.jpg",
+          short:
+            "Botiquín con apósitos, vendas, antisépticos, tijeras y elementos esenciales para primeros auxilios.",
+          details: {
+            contents:
+              "Apósitos, gasas, vendas, esparadrapo, tijeras, pinzas, guantes, guía de primeros auxilios",
+            packaging: "Maletín",
+            use: "Emergencias menores",
+          },
+        },
+        {
+          id: "a_v16",
+          category: "kits",
+          title: "Luz V-16 — Baliza homologada",
+          subtitle: "Baliza de señalización para carretera",
+          img: "https://i.postimg.cc/L6YxFpcy/luz-emergencia-v16-gonplac-2269559.jpg",
+          short:
+            "Baliza V-16 homologada para señalizar averías y accidentes. Visibilidad 360º.",
+          details: {
+            certification: "Homologada DGT",
+            packaging: "Unidad",
+            use: "Señalización en carretera",
+          },
+        },
+      ];
+
+      PRODUCTS.forEach(
+        (p) =>
+          (p._searchable = normalizeText(
+            [
+              p.title,
+              p.subtitle,
+              p.short,
+              JSON.stringify(p.details || {}),
+            ].join(" ")
+          ))
+      );
+
+      /* ===================== STATE ===================== */
+      const state = { favorites: new Set(), compare: new Set() };
+
+      /* ===================== RENDER GRID ===================== */
+      function escapeHtml(s) {
+        return (s + "").replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[m])
+        );
+      }
+
+      function renderProductGrid(list) {
+        const grid = document.getElementById("productGrid");
+        grid.innerHTML = "";
+        if (!list.length) {
+          grid.innerHTML =
+            '<div style="padding:20px;color:var(--muted);background:rgba(255,255,255,0.02);border-radius:10px">No se encontraron productos.</div>';
+          return;
+        }
+        list.forEach((p) => {
+          const card = document.createElement("article");
+          card.className = "product-card";
+          const favClass = state.favorites.has(p.id) ? "favorited" : "";
+          card.innerHTML = `
+        <div class="img"><img src="${escapeHtml(p.img)}" alt="${escapeHtml(
+            p.title
+          )}"></div>
+        <div class="product-title">${escapeHtml(p.title)}</div>
+        <div class="product-sub">${escapeHtml(p.subtitle)}</div>
+        <div class="product-short">${escapeHtml(p.short)}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+          <div style="font-size:13px;color:#2f6f66"><strong>Categoría:</strong> ${escapeHtml(
+            p.category
+          )}</div>
+          <div style="font-size:13px;color:#6b8f8b">${escapeHtml(
+            p.details && p.details.packaging ? p.details.packaging : ""
+          )}</div>
+        </div>
+        <div class="controls">
+          <button class="btn btn-primary" onclick="openProductModal('${
+            p.id
+          }')">Ficha</button>
+
+          <button class="btn-heart ${favClass}" onclick="toggleFavorite('${
+            p.id
+          }', this)" title="Marcar favorito">
+            <span class="heart">❤</span><span style="font-weight:800">Favorito</span>
+          </button>
+
+          <button class="btn-compare" onclick="toggleCompare('${
+            p.id
+          }', this)" title="Añadir a comparar">🔁 Comparar</button>
+
+          <button class="btn-share" onclick="shareProduct('${
+            p.id
+          }')" title="Copiar enlace">🔗 Compartir</button>
+        </div>
+      `;
+          grid.appendChild(card);
+        });
+      }
+
+      renderProductGrid(PRODUCTS);
+
+      /* ===================== FILTERS ===================== */
+      const filterCategory = document.getElementById("filterCategory");
+      const filterAbs = document.getElementById("filterAbs");
+      const filterSize = document.getElementById("filterSize");
+      const labelAbs = document.getElementById("labelAbs");
+      const labelSize = document.getElementById("labelSize");
+
+      function setAbsOptionsForCategory(cat) {
+        filterAbs.innerHTML = "";
+        
+        if (cat === "incontinencia") {
+          const opts = [
+            { v: "any", t: "Indiferente" },
+            { v: "bajo", t: "Bajo" },
+            { v: "medio", t: "Medio" },
+            { v: "alto", t: "Alto" },
+            { v: "dia", t: "Día" },
+            { v: "noche", t: "Noche" },
+          ];
+          opts.forEach((o) => {
+            const opt = document.createElement("option");
+            opt.value = o.v;
+            opt.textContent = o.t;
+            filterAbs.appendChild(opt);
+          });
+          filterAbs.style.display = "";
+          labelAbs.style.display = "";
+        } else {
+          const el = document.createElement("option");
+          el.value = "any";
+          el.textContent = "No aplica";
+          filterAbs.appendChild(el);
+          filterAbs.style.display = "none";
+          labelAbs.style.display = "none";
+        }
+      }
+
+      function setSizeVisibility(cat) {
+        if (cat === "incontinencia") {
+          filterSize.style.display = "";
+          labelSize.style.display = "";
+        } else {
+          filterSize.style.display = "none";
+          labelSize.style.display = "none";
+        }
+      }
+
+      setAbsOptionsForCategory(filterCategory.value);
+      setSizeVisibility(filterCategory.value);
+
+      filterCategory.addEventListener("change", () => {
+        setAbsOptionsForCategory(filterCategory.value);
+        setSizeVisibility(filterCategory.value);
+        applyFiltersAndSearch();
+      });
+
+      function applyFiltersAndSearch() {
+        const cat = document.getElementById("filterCategory").value;
+        let abs = document.getElementById("filterAbs").value || "any";
+        const sizeRaw = document.getElementById("filterSize").value || "any";
+        const textRaw = (
+          document.getElementById("textSearch").value ||
+          document.getElementById("globalSearch").value ||
+          ""
+        ).trim();
+        const text = normalizeText(textRaw);
+        const size =
+          sizeRaw && sizeRaw !== "any" ? sizeRaw.toUpperCase() : null;
+
+        let filtered = PRODUCTS.slice();
+        if (cat && cat !== "all")
+          filtered = filtered.filter((p) => p.category === cat);
+
+        if (abs && abs !== "any" && cat === "incontinencia") {
+          filtered = filtered.filter((p) => {
+            const d = p.details || {};
+            if (
+              d.absorption &&
+              normalizeText(d.absorption) === normalizeText(abs)
+            )
+              return true;
+            if (d.variants) {
+              for (const k in d.variants) {
+                if (
+                  normalizeText(d.variants[k].absorption) === normalizeText(abs)
+                )
+                  return true;
+                if (abs === "dia" && k.toLowerCase().includes("dia"))
+                  return true;
+                if (abs === "noche" && k.toLowerCase().includes("noche"))
+                  return true;
+              }
+            }
+            return false;
+          });
+        }
+
+        if (size) {
+          filtered = filtered.filter((p) => {
+            const d = p.details || {};
+            if (
+              Array.isArray(d.sizes) &&
+              d.sizes.map((x) => String(x).toUpperCase()).includes(size)
+            )
+              return true;
+            return false;
+          });
+        }
+
+        if (text) {
+          filtered = filtered.filter((p) => p._searchable.includes(text));
+        }
+
+        renderProductGrid(filtered);
+      }
+
+      document
+        .getElementById("filterAbs")
+        .addEventListener("change", applyFiltersAndSearch);
+      document
+        .getElementById("filterSize")
+        .addEventListener("change", applyFiltersAndSearch);
+      document
+        .getElementById("textSearchBtn")
+        .addEventListener("click", applyFiltersAndSearch);
+      document.getElementById("textSearch").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") applyFiltersAndSearch();
+      });
+
+      document
+        .getElementById("globalSearchBtn")
+        .addEventListener("click", () => {
+          document.getElementById("textSearch").value =
+            document.getElementById("globalSearch").value;
+          document.getElementById("filterCategory").value = "all";
+          setAbsOptionsForCategory("all");
+          setSizeVisibility("all");
+          applyFiltersAndSearch();
+          document
+            .querySelector("#products")
+            ?.scrollIntoView({ behavior: "smooth" });
+        });
+
+      document.getElementById("resetFilters").addEventListener("click", () => {
+        document.getElementById("filterCategory").value = "all";
+        setAbsOptionsForCategory("all");
+        setSizeVisibility("all");
+        document.getElementById("filterSize").value = "any";
+        document.getElementById("textSearch").value = "";
+        document.getElementById("globalSearch").value = "";
+        renderProductGrid(PRODUCTS);
+      });
+
+      /* ===================== AUTOCOMPLETE ===================== */
+      const SUGGESTIONS = Array.from(
+        new Set(
+          PRODUCTS.flatMap((p) => {
+            const w = normalizeText(p.title).split(" ");
+            return [normalizeText(p.title), ...w];
+          })
+        )
+      ).filter(Boolean);
+
+      function showAutocomplete(inputEl, dropdownEl) {
+        const q = normalizeText(inputEl.value || "");
+        if (!q) {
+          dropdownEl.classList.remove("visible");
+          dropdownEl.setAttribute("aria-hidden", "true");
+          dropdownEl.innerHTML = "";
+          return;
+        }
+        const matches = SUGGESTIONS.filter((s) => s.startsWith(q)).slice(0, 8);
+        if (!matches.length) {
+          dropdownEl.classList.remove("visible");
+          dropdownEl.setAttribute("aria-hidden", "true");
+          dropdownEl.innerHTML = "";
+          return;
+        }
+        dropdownEl.innerHTML = matches
+          .map(
+            (u) =>
+              `<div class="item" role="option" data-val="${escapeHtml(
+                u
+              )}">${escapeHtml(u)}</div>`
+          )
+          .join("");
+        dropdownEl.classList.add("visible");
+        dropdownEl.setAttribute("aria-hidden", "false");
+        dropdownEl.querySelectorAll(".item").forEach((it) =>
+          it.addEventListener("click", () => {
+            const val = it.getAttribute("data-val");
+            inputEl.value = val;
+            dropdownEl.classList.remove("visible");
+            dropdownEl.setAttribute("aria-hidden", "true");
+            if (inputEl.id === "globalSearch") {
+              document.getElementById("textSearch").value = val;
+              document.getElementById("filterCategory").value = "all";
+              setAbsOptionsForCategory("all");
+              setSizeVisibility("all");
+              applyFiltersAndSearch();
+              document
+                .querySelector("#products")
+                ?.scrollIntoView({ behavior: "smooth" });
+            } else {
+              document.getElementById("textSearch").value = val;
+              applyFiltersAndSearch();
+            }
+          })
+        );
+      }
+
+      const gInput = document.getElementById("globalSearch");
+      const gDrop = document.getElementById("globalAutocomplete");
+      const pInput = document.getElementById("textSearch");
+      const pDrop = document.getElementById("productsAutocomplete");
+      let acTimer;
+      function onAutoInput(e) {
+        clearTimeout(acTimer);
+        acTimer = setTimeout(() => {
+          if (e.target === gInput) showAutocomplete(gInput, gDrop);
+          if (e.target === pInput) showAutocomplete(pInput, pDrop);
+        }, 120);
+      }
+      gInput.addEventListener("input", onAutoInput);
+      pInput.addEventListener("input", onAutoInput);
+      document.addEventListener("click", (e) => {
+        if (!gInput.contains(e.target) && !gDrop.contains(e.target)) {
+          gDrop.classList.remove("visible");
+          gDrop.setAttribute("aria-hidden", "true");
+        }
+        if (!pInput.contains(e.target) && !pDrop.contains(e.target)) {
+          pDrop.classList.remove("visible");
+          pDrop.setAttribute("aria-hidden", "true");
+        }
+      });
+
+      /* ===================== FAVORITES & COMPARE ===================== */
+      function toggleFavorite(id, btn) {
+        if (state.favorites.has(id)) {
+          state.favorites.delete(id);
+          btn.classList.remove("favorited");
+        } else {
+          state.favorites.add(id);
+          btn.classList.add("favorited");
+        }
+      }
+      function toggleCompare(id, btn) {
+        if (state.compare.has(id)) {
+          state.compare.delete(id);
+          btn.style.opacity = "";
+        } else {
+          if (state.compare.size >= 4) {
+            alert("Máximo 4 productos para comparar");
+            return;
+          }
+          state.compare.add(id);
+          btn.style.opacity = "0.6";
+        }
+        renderCompareBox();
+      }
+      function renderCompareBox() {
+        const box = document.getElementById("compareBox");
+        const arr = Array.from(state.compare);
+        if (arr.length === 0) {
+          box.innerHTML =
+            '<div style="color:var(--muted)">No hay productos en el comparador.</div>';
+          return;
+        }
+        box.innerHTML = arr
+          .map((id) => {
+            const p = PRODUCTS.find((x) => x.id === id);
+            return `<div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;margin-bottom:6px"><img src="${escapeHtml(
+              p.img
+            )}" style="width:48px;height:48px;object-fit:cover;border-radius:6px" alt="${escapeHtml(
+              p.title
+            )}"><div style="flex:1"><div style="font-weight:800;font-size:13px">${escapeHtml(
+              p.title
+            )}</div><div style="font-size:12px;color:#6b8f8b">${escapeHtml(
+              p.subtitle
+            )}</div></div><button class="btn-ghost" onclick="removeFromCompare('${
+              p.id
+            }')">✕</button></div>`;
+          })
+          .join("");
+      }
+      function removeFromCompare(id) {
+        state.compare.delete(id);
+        renderCompareBox();
+      }
+      function clearComparison() {
+        state.compare.clear();
+        renderCompareBox();
+      }
+      function showComparison() {
+        if (state.compare.size < 2)
+          return alert("Selecciona al menos 2 productos para comparar.");
+        const ids = Array.from(state.compare);
+        const products = ids
+          .map((id) => PRODUCTS.find((p) => p.id === id))
+          .filter(Boolean);
+        const container = document.getElementById("compareContent");
+        container.innerHTML = "";
+        const grid = document.createElement("div");
+        grid.className = "compare-grid";
+        products.forEach((p) => {
+          const card = document.createElement("div");
+          card.className = "compare-card";
+          const sizes =
+            p.details && p.details.sizes
+              ? Array.isArray(p.details.sizes)
+                ? p.details.sizes.join(", ")
+                : p.details.sizes
+              : "-";
+          let absorption = "-";
+          if (p.details) {
+            if (p.details.absorption) absorption = p.details.absorption;
+            else if (p.details.variants) {
+              const v = p.details.variants;
+              const d = v.dia ? v.dia.absorption || "" : "";
+              const n = v.noche ? v.noche.absorption || "" : "";
+              absorption =
+                (d ? "Día: " + d : "") +
+                (n ? (d ? " / Noche: " + n : "Noche: " + n) : "");
+            }
+          }
+          card.innerHTML = `<img src="${escapeHtml(p.img)}" alt="${escapeHtml(
+            p.title
+          )}" style="width:100%;height:120px;object-fit:cover;border-radius:8px"><h3 style="margin:8px 0 4px 0">${escapeHtml(
+            p.title
+          )}</h3><div style="color:#6b8f8b;margin-bottom:8px">${escapeHtml(
+            p.subtitle
+          )}</div><div style="font-size:14px;color:#23524f;margin-bottom:8px">${escapeHtml(
+            p.short
+          )}</div><div style="font-size:13px;"><strong>Absorción:</strong> ${escapeHtml(
+            absorption
+          )}</div><div style="font-size:13px;"><strong>Tallas:</strong> ${escapeHtml(
+            sizes
+          )}</div><div style="font-size:13px;"><strong>Embalaje:</strong> ${escapeHtml(
+            p.details && (p.details.packaging || p.details.contents || "-")
+          )}</div><div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end"><button class="btn-ghost" onclick="removeFromCompare('${
+            p.id
+          }')">Eliminar</button><button class="btn btn-primary" onclick="openProductModal('${
+            p.id
+          }')">Ficha</button></div>`;
+          grid.appendChild(card);
+        });
+        container.appendChild(grid);
+        document.getElementById("compareModal").style.display = "flex";
+        document
+          .getElementById("compareModal")
+          .setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+      function closeCompareModal() {
+        document.getElementById("compareModal").style.display = "none";
+        document
+          .getElementById("compareModal")
+          .setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
+      function exportComparison() {
+        const ids = Array.from(state.compare);
+        const products = ids
+          .map((id) => PRODUCTS.find((p) => p.id === id))
+          .filter(Boolean);
+        let txt = "Comparativa Biovitaly\n\n";
+        products.forEach((p) => {
+          txt += `${p.title}\n${p.subtitle}\n${p.short}\nTallas: ${
+            p.details && p.details.sizes
+              ? Array.isArray(p.details.sizes)
+                ? p.details.sizes.join(", ")
+                : p.details.sizes
+              : "-"
+          }\nAbsorción: ${
+            p.details &&
+            (p.details.absorption || JSON.stringify(p.details.variants) || "-")
+          }\n\n`;
+        });
+        navigator.clipboard
+          ?.writeText(txt)
+          .then(() => alert("Comparativa copiada al portapapeles."));
+      }
+
+      /* ===================== PRODUCT MODAL ===================== */
+      const productModal = document.getElementById("productModal");
+      function openProductModal(id) {
+        const p = PRODUCTS.find((x) => x.id === id);
+        if (!p) return alert("Producto no encontrado.");
+        const main = document.getElementById("modalMain");
+        main.innerHTML = `<h2 style="margin:0 0 6px 0">${escapeHtml(
+          p.title
+        )}</h2><div style="color:#2f6f66;margin-bottom:8px">${escapeHtml(
+          p.subtitle
+        )}</div><img src="${escapeHtml(p.img)}" alt="${escapeHtml(
+          p.title
+        )}" style="width:100%;height:320px;object-fit:cover;border-radius:8px;margin-bottom:10px"><div style="color:#23524f;margin-bottom:12px">${escapeHtml(
+          p.short
+        )}</div>`;
+        const specs = document.getElementById("modalSpecs");
+        specs.innerHTML = "";
+        if (p.details.packaging)
+          specs.innerHTML += `<div style="margin-bottom:8px"><strong>Embalaje:</strong> ${escapeHtml(
+            p.details.packaging
+          )}</div>`;
+        if (p.details.contents)
+          specs.innerHTML += `<div style="margin-bottom:8px"><strong>Contenido:</strong> ${escapeHtml(
+            p.details.contents
+          )}</div>`;
+        if (
+          p.details &&
+          p.details.sizes &&
+          Array.isArray(p.details.sizes) &&
+          p.details.sizes.length
+        ) {
+          const sizeOptions = p.details.sizes
+            .map((s) => `<option value="${s}">${s}</option>`)
+            .join("");
+          specs.innerHTML += `<div style="margin-top:8px"><label style="font-weight:800">Talla</label><select id="modalSize" style="width:100%;padding:10px;border-radius:8px;margin-top:6px">${sizeOptions}</select></div>`;
+        }
+        if (p.details && p.details.variants) {
+          const variants = Object.keys(p.details.variants);
+          const options = variants
+            .map(
+              (v) =>
+                `<option value="${v}">${
+                  v.charAt(0).toUpperCase() + v.slice(1)
+                }</option>`
+            )
+            .join("");
+          specs.innerHTML += `<div style="margin-top:8px"><label style="font-weight:800">Modo</label><select id="modalVariant" style="width:100%;padding:10px;border-radius:8px;margin-top:6px">${options}</select></div>`;
+          specs.innerHTML += `<div id="variantInfo" style="margin-top:12px;color:#23524f"></div>`;
+        } else if (p.details && p.details.absorption) {
+          specs.innerHTML += `<div style="margin-top:8px"><strong>Absorción:</strong> ${escapeHtml(
+            p.details.absorption
+          )}</div>`;
+        }
+        const acc = document.getElementById("modalAccordions");
+        acc.innerHTML = "";
+        acc.innerHTML += makeAccordion(
+          "Composición y materiales",
+          p.details.composition ||
+            p.details.contents ||
+            "Información disponible bajo petición."
+        );
+        acc.innerHTML += makeAccordion(
+          "Usos recomendados",
+          p.details.use || "Ver ficha técnica."
+        );
+        acc.innerHTML += makeAccordion(
+          "Recomendaciones",
+          p.details.recommendations || "Consultar documento técnico."
+        );
+        acc.innerHTML += makeAccordion("Notas", p.details.notes || "");
+        productModal.style.display = "flex";
+        productModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        const variantSelect = document.getElementById("modalVariant");
+        const variantInfo = document.getElementById("variantInfo");
+        if (variantSelect && variantInfo) {
+          function updateVariantInfo() {
+            const key = variantSelect.value;
+            const v = p.details.variants[key];
+            const abs = v && v.absorption ? v.absorption : "-";
+            const desc = v && v.description ? v.description : "";
+            variantInfo.innerHTML = `<div><strong>Absorción:</strong> ${escapeHtml(
+              abs
+            )}</div><div style="margin-top:6px">${escapeHtml(desc)}</div>`;
+          }
+          variantSelect.addEventListener("change", updateVariantInfo);
+          updateVariantInfo();
+        }
+      }
+      function makeAccordion(title, body) {
+        return `<div class="acc-item"><div class="acc-head" onclick="toggleAccordion(this)"><div style="font-weight:800">${escapeHtml(
+          title
+        )}</div><div>+</div></div><div class="acc-body">${body}</div></div>`;
+      }
+      function toggleAccordion(el) {
+        const body = el.nextElementSibling;
+        if (!body) return;
+        if (body.classList.contains("open")) {
+          body.classList.remove("open");
+          body.style.display = "none";
+          el.querySelector("div:last-child").textContent = "+";
+        } else {
+          body.classList.add("open");
+          body.style.display = "block";
+          el.querySelector("div:last-child").textContent = "−";
+        }
+      }
+      function closeProductModal() {
+        productModal.style.display = "none";
+        productModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
+      function goToContactFromModal() {
+        closeProductModal();
+        openContactAndFocus();
+      }
+
+      /* ===================== SHARE & LIGHTBOX ===================== */
+      function shareProduct(id) {
+        const url = location.origin + location.pathname + "#product-" + id;
+        if (navigator.clipboard)
+          navigator.clipboard
+            .writeText(url)
+            .then(() => alert("Enlace copiado al portapapeles"));
+        else alert("Copia este enlace: " + url);
+      }
+      function openImage(src) {
+        document.getElementById("imgModalImg").src = src;
+        document.getElementById("imgModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+      function closeImage() {
+        document.getElementById("imgModal").style.display = "none";
+        document.body.style.overflow = "";
+        document.getElementById("imgModalImg").src = "";
+      }
+
+      /* ===================== CONTACT HANDLING (simulado) ===================== */
+      function submitContact(e) {
+        e.preventDefault();
+        const f = e.target;
+        const name = f.name.value.trim();
+        const email = f.email.value.trim();
+        const message = f.message.value.trim();
+        if (!name || !email || !message)
+          return alert("Rellena los campos obligatorios.");
+        alert(
+          `Gracias ${name}. Hemos recibido tu consulta y responderemos a ${email}.`
+        );
+        f.reset();
+      }
+      function sendQuickDuda() {
+        const n = document.getElementById("quickName").value.trim();
+        const e = document.getElementById("quickEmail").value.trim();
+        const m = document.getElementById("quickMsg").value.trim();
+        if (!n || !e || !m) return alert("Rellena nombre, email y mensaje.");
+        alert(`Duda enviada: "${m}". Responderemos a ${e}.`);
+        clearQuickDuda();
+      }
+      function clearQuickDuda() {
+        document.getElementById("quickName").value = "";
+        document.getElementById("quickEmail").value = "";
+        document.getElementById("quickMsg").value = "";
+      }
+      function openContactAndFocus() {
+        document
+          .querySelector("#contact")
+          ?.scrollIntoView({ behavior: "smooth" });
+        setTimeout(() => {
+          const el = document.querySelector("#contactForm input[name=name]");
+          if (el) el.focus();
+        }, 600);
+      }
+
+      /* ===================== CAROUSEL 3D & NAV ===================== */
+      const carouselEl = document.getElementById("carousel");
+      const slides = [
+        {
+          img: "https://i.postimg.cc/hPqqbtTV/panales-para-adultos-regular.jpg",
+          title: "Pañales — Día y Noche",
+        },
+        {
+          img: "https://i.postimg.cc/15wf9x7m/protectores-de-cama.jpg",
+          title: "Empapadores 60x75 / 60x90",
+        },
+        {
+          img: "https://i.postimg.cc/1XZGbJdJ/Copilot-20250901-214905.png",
+          title: "Guantes y Toallitas",
+        },
+        {
+          img: "https://i.postimg.cc/fRhrNfGt/Copilot-20250901-214306.png",
+          title: "Botiquín y V-16",
+        },
+      ];
+      const radius = 520;
+      const theta = 360 / slides.length;
+      let angle = 0;
+      function buildCarousel() {
+        carouselEl.innerHTML = "";
+        slides.forEach((s, i) => {
+          const d = document.createElement("div");
+          d.className = "slide";
+          d.style.transform = `rotateY(${
+            i * theta
+          }deg) translateZ(${radius}px)`;
+          d.innerHTML = `<img src="${s.img}" alt="${s.title}"><div class="caption">${s.title}</div>`;
+          carouselEl.appendChild(d);
+        });
+        rotateCarousel(0);
+      }
+      function rotateCarousel(dir) {
+        angle += dir * theta;
+        carouselEl.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
+      }
+      document
+        .getElementById("prev")
+        .addEventListener("click", () => rotateCarousel(-1));
+      document
+        .getElementById("next")
+        .addEventListener("click", () => rotateCarousel(1));
+      setInterval(() => rotateCarousel(1), 8000);
+      buildCarousel();
+      document.querySelectorAll("[data-scroll]").forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const href = a.getAttribute("href");
+          const el = document.querySelector(href);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+      document
+        .getElementById("btnProducts")
+        .addEventListener("click", () =>
+          document
+            .querySelector("#products")
+            .scrollIntoView({ behavior: "smooth" })
+        );
+      document
+        .getElementById("btnContact")
+        .addEventListener("click", () =>
+          document
+            .querySelector("#contact")
+            .scrollIntoView({ behavior: "smooth" })
+        );
+      const splash = document.getElementById("splash"),
+        brand = document.getElementById("brand");
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY || window.pageYOffset;
+        if (y > 80) {
+          splash.classList.add("hide");
+          brand.classList.add("hide-brand");
+        } else {
+          splash.classList.remove("hide");
+          brand.classList.remove("hide-brand");
+        }
+      });
+      window.addEventListener("load", () => {
+        document.getElementById("year").textContent = new Date().getFullYear();
+        const h = location.hash;
+        if (h && h.startsWith("#product-")) {
+          const id = h.replace("#product-", "");
+          setTimeout(() => openProductModal(id), 600);
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeProductModal();
+          closeImage();
+          closeCompareModal();
+        }
+      });
+      window.openProductModal = openProductModal;
+      window.closeProductModal = closeProductModal;
+      window.toggleFavorite = toggleFavorite;
+      window.toggleCompare = toggleCompare;
+      window.renderProductGrid = renderProductGrid;
+      window.removeFromCompare = removeFromCompare;
+      window.showComparison = showComparison;
+      window.clearComparison = clearComparison;
+      window.applyFiltersAndSearch = applyFiltersAndSearch;
+      window.shareProduct = shareProduct;
+      window.openImage = openImage;
+      window.closeImage = closeImage;
+    </script>
+  </body>
+</html>
