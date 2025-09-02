@@ -1137,8 +1137,7 @@
               <div style="margin-top: 18px">
                 <h4 style="color: var(--accent2)">Contacto directo</h4>
                 <p style="color: var(--muted)">
-                  Email: <strong>biovitalymedical@gmail.com</strong><br />Tel: +34 600
-                  000 000<br />Dirección: Almacén Sevilla (Polígono Industrial ZAL)
+                  Email: <strong>biovitalymedical@gmail.com</strong><br />Tel: Solicitar por correo  <br />Dirección: Almacén Sevilla (Polígono Industrial ZAL)
                 </p>
               </div>
             </div>
@@ -2101,27 +2100,83 @@
       }
 
       /* ===================== CONTACT HANDLING (simulado) ===================== */
-      function submitContact(e) {
-        e.preventDefault();
-        const f = e.target;
-        const name = f.name.value.trim();
-        const email = f.email.value.trim();
-        const message = f.message.value.trim();
-        if (!name || !email || !message)
-          return alert("Rellena los campos obligatorios.");
-        alert(
-          `Gracias ${name}. Hemos recibido tu consulta y responderemos a ${email}.`
-        );
-        f.reset();
-      }
-      function sendQuickDuda() {
-        const n = document.getElementById("quickName").value.trim();
-        const e = document.getElementById("quickEmail").value.trim();
-        const m = document.getElementById("quickMsg").value.trim();
-        if (!n || !e || !m) return alert("Rellena nombre, email y mensaje.");
-        alert(`Duda enviada: "${m}". Responderemos a ${e}.`);
-        clearQuickDuda();
-      }
+     // CONFIG - usa tu service id y template id (cámbialos si tus template_id son distintos)
+const SERVICE_ID = 'service_tqbxksi';
+const TEMPLATE_CONTACT_ID = 'template_oda6o0r'; // reemplaza si tu template_id es otro
+
+async function submitContact(e) {
+  e.preventDefault();
+  const f = e.target;
+  const name = (f.name && f.name.value || '').trim();
+  const email = (f.email && f.email.value || '').trim();
+  const company = (f.company && f.company.value || '').trim();
+  const message = (f.message && f.message.value || '').trim();
+
+  if (!name || !email || !message) {
+    return alert("Rellena los campos obligatorios.");
+  }
+
+  const btn = f.querySelector('button[type="submit"]');
+  const origText = btn ? btn.innerHTML : null;
+  if (btn) { btn.disabled = true; btn.innerHTML = 'Enviando…'; }
+
+  const templateParams = {
+    from_name: name,
+    from_email: email,
+    company: company,
+    message: message,
+    subject: 'Consulta desde web'
+  };
+
+  try {
+    // Enviar usando EmailJS (programático)
+    const resp = await emailjs.send(SERVICE_ID, TEMPLATE_CONTACT_ID, templateParams);
+    console.log('EmailJS submitContact OK', resp);
+    alert(`Gracias ${name}. Hemos recibido tu consulta y responderemos a ${email}.`);
+    f.reset();
+  } catch (err) {
+    console.error('Error enviando consulta:', err);
+    alert('Error al enviar la consulta. Intenta de nuevo o escríbenos a biovitalymedical@gmail.com');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = origText; }
+  }
+}
+
+const TEMPLATE_QUICK_ID = 'template_9mec4wt'; // reemplaza si tu template_id es otro
+
+async function sendQuickDuda() {
+  const nameEl = document.getElementById("quickName");
+  const emailEl = document.getElementById("quickEmail");
+  const msgEl = document.getElementById("quickMsg");
+  const name = (nameEl && nameEl.value || '').trim();
+  const email = (emailEl && emailEl.value || '').trim();
+  const message = (msgEl && msgEl.value || '').trim();
+  if (!name || !email || !message) return alert("Rellena nombre, email y mensaje.");
+
+  const btn = document.querySelector('#quickDuda button') || document.getElementById('quickBtn');
+  const origText = btn ? btn.innerHTML : null;
+  if (btn) { btn.disabled = true; btn.innerHTML = 'Enviando…'; }
+
+  const templateParams = {
+    from_name: name,
+    from_email: email,
+    message: message,
+    subject: 'Duda rápida desde web'
+  };
+
+  try {
+    const resp = await emailjs.send(SERVICE_ID, TEMPLATE_QUICK_ID, templateParams);
+    console.log('EmailJS sendQuickDuda OK', resp);
+    alert('Duda enviada correctamente. Gracias.');
+    clearQuickDuda();
+  } catch (err) {
+    console.error('Error enviando duda rápida:', err);
+    alert('No se pudo enviar la duda. Por favor intenta de nuevo o escribe a biovitalymedical@gmail.com');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = origText; }
+  }
+}
+
       function clearQuickDuda() {
         document.getElementById("quickName").value = "";
         document.getElementById("quickEmail").value = "";
@@ -2247,5 +2302,20 @@
       window.openImage = openImage;
       window.closeImage = closeImage;
     </script>
-  </body>
-</html>
+
+ <!-- EmailJS SDK -->
+   <!-- 👇 PRIMERO carga EmailJS desde el CDN -->
+   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+   <script>
+     (function() {
+       emailjs.init("p1lAibampY8yOVh1o"); // tu public key
+       console.log("EmailJS inicializado");
+     })();
+   </script>
+ 
+   <!-- 👇 DESPUÉS carga tu script que usa emailjs -->
+   <script src="script.js"></script>
+ </body>
+ </html>
+ 
+
